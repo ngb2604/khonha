@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kho Nhà – Quản lý đồ cũ</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --surface2: #f0efe9;
+      --border: rgba(0,0,0,0.1);
+      --border2: rgba(0,0,0,0.18);
+      --text: #1a1a18;
+      --text2: #6b6b63;
+      --text3: #9b9b90;
+      --accent: #2d6a4f;
+      --accent-light: #e8f5ee;
+      --accent-text: #1b4332;
+      --danger: #c0392b;
+      --danger-light: #fdf2f1;
+      --warn-bg: #fff8e1;
+      --warn-text: #7d5a00;
+      --radius: 10px;
+      --radius-lg: 14px;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ─── LOGIN ─────────────────────────────── */
+    #loginScreen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+      background: var(--bg);
+    }
+
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .brand-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--accent); display: flex; align-items: center;
+      justify-content: center; font-size: 20px;
+    }
+    .brand-name { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .brand-sub { font-size: 13px; color: var(--text2); margin-bottom: 2rem; }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .form-control {
+      width: 100%; padding: 10px 12px; font-size: 14px;
+      border: 1px solid var(--border2); border-radius: var(--radius);
+      background: var(--surface); color: var(--text);
+      outline: none; transition: border-color 0.15s;
+    }
+    .form-control:focus { border-color: var(--accent); }
+
+    .btn-primary {
+      width: 100%; padding: 11px; font-size: 14px; font-weight: 600;
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); cursor: pointer; transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .login-err { font-size: 12px; color: var(--danger); margin-top: 10px; text-align: center; min-height: 16px; }
+
+    /* ─── TOPBAR ─────────────────────────────── */
+    #mainScreen { display: none; flex-direction: column; min-height: 100vh; }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem; height: 56px; position: sticky; top: 0; z-index: 10;
+    }
+    .topbar-brand { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .topbar-brand-icon { width: 28px; height: 28px; border-radius: 7px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--accent-light); color: var(--accent-text);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700;
+    }
+    .topbar-name { font-size: 13px; color: var(--text2); }
+    .btn-logout {
+      font-size: 12px; color: var(--text2); background: none;
+      border: 1px solid var(--border2); border-radius: var(--radius);
+      padding: 5px 12px; cursor: pointer;
+    }
+    .btn-logout:hover { background: var(--surface2); }
+
+    /* ─── MAIN ─────────────────────────────── */
+    .main { padding: 1.5rem; max-width: 1100px; margin: 0 auto; flex: 1; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px; margin-bottom: 1.5rem;
+    }
+    .stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px 16px;
+    }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .stat-val { font-size: 24px; font-weight: 700; color: var(--text); }
+    .stat-val.small { font-size: 16px; }
+
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; margin-bottom: 1.25rem;
+    }
+    .toolbar-left { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .search { padding: 8px 12px; font-size: 13px; width: 220px; border: 1px solid var(--border2); border-radius: var(--radius); background: var(--surface); color: var(--text); outline: none; }
+    .search:focus { border-color: var(--accent); }
+    .filter { padding: 8px 10px; font-size: 13px; border: 1px solid var(--border2); border-radius: var(--radius); background: var(--surface); color: var(--text); cursor: pointer; outline: none; }
+    .btn-add {
+      padding: 8px 16px; font-size: 13px; font-weight: 600;
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--radius); cursor: pointer;
+    }
+    .btn-add:hover { opacity: 0.88; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+
+    .item-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.1s;
+    }
+    .item-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+    .card-img {
+      width: 100%; height: 140px; background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; overflow: hidden;
+    }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 12px; }
+    .card-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+    .card-size { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; }
+    .card-price { font-size: 14px; font-weight: 700; color: var(--text); }
+    .badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; }
+    .badge-ok { background: var(--accent-light); color: var(--accent-text); }
+    .badge-low { background: var(--warn-bg); color: var(--warn-text); }
+    .badge-zero { background: var(--danger-light); color: var(--danger); }
+
+    .empty { text-align: center; padding: 4rem 1rem; color: var(--text2); font-size: 14px; }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+
+    .loading { text-align: center; padding: 3rem; color: var(--text2); font-size: 14px; }
+
+    /* ─── MODAL ─────────────────────────────── */
+    .overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 200;
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: var(--radius-lg);
+      padding: 1.75rem; width: 100%; max-width: 460px;
+      max-height: 90vh; overflow-y: auto;
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .modal-title { font-size: 16px; font-weight: 700; }
+    .btn-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text2); line-height: 1; }
+
+    .upload-area {
+      width: 100%; padding: 2rem 1rem; border: 2px dashed var(--border2);
+      border-radius: var(--radius); text-align: center; cursor: pointer;
+      font-size: 13px; color: var(--text2); margin-bottom: 0;
+      transition: background 0.15s;
+    }
+    .upload-area:hover { background: var(--surface2); }
+    .preview-img { width: 100%; height: 150px; object-fit: cover; border-radius: var(--radius); display: none; }
+
+    .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.5rem; }
+    .btn-cancel { padding: 9px 18px; font-size: 13px; background: none; border: 1px solid var(--border2); border-radius: var(--radius); cursor: pointer; color: var(--text2); }
+    .btn-cancel:hover { background: var(--surface2); }
+    .btn-save { padding: 9px 18px; font-size: 13px; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; }
+    .btn-save:hover { opacity: 0.88; }
+    .btn-danger-outline { padding: 9px 18px; font-size: 13px; background: none; border: 1px solid var(--danger); border-radius: var(--radius); cursor: pointer; color: var(--danger); margin-right: auto; }
+
+    .detail-img { width: 100%; height: 200px; background: var(--surface2); border-radius: var(--radius); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 56px; margin-bottom: 1.25rem; }
+    .detail-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .detail-table td { padding: 9px 0; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .detail-table tr:last-child td { border-bottom: none; }
+    .detail-table .dk { color: var(--text2); width: 40%; }
+    .detail-table .dv { font-weight: 600; text-align: right; }
+
+    .inline-edit { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+    .inline-input {
+      width: 90px; padding: 5px 8px; font-size: 13px;
+      border: 1px solid var(--border2); border-radius: 6px;
+      text-align: right; background: var(--surface); color: var(--text); outline: none;
+    }
+    .inline-input:focus { border-color: var(--accent); }
+    .btn-inline { padding: 5px 12px; font-size: 12px; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: #1a1a18; color: #fff; padding: 10px 20px; border-radius: 999px;
+      font-size: 13px; font-weight: 500; z-index: 999;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ─── SETUP BANNER ─────────────────────────────── */
+    .setup-banner {
+      background: #fff3cd; border: 1px solid #ffc107; border-radius: var(--radius);
+      padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 13px; color: #664d03;
+      display: none;
+    }
+    .setup-banner.show { display: block; }
+    .setup-banner strong { display: block; margin-bottom: 4px; }
+
+    @media (max-width: 600px) {
+      .topbar-name { display: none; }
+      .search { width: 150px; }
+      .stat-val { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="brand">
+      <div class="brand-icon">📦</div>
+      <span class="brand-name">Kho Nhà</span>
+    </div>
+    <div class="brand-sub">Quản lý đồ cũ — đồng bộ mọi thiết bị</div>
+
+    <div class="form-group">
+      <label class="form-label">Tài khoản</label>
+      <select class="form-control" id="loginUser">
+        <option value="">-- Chọn tài khoản --</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Mật khẩu</label>
+      <input type="password" class="form-control" id="loginPass" placeholder="Nhập mật khẩu" />
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Đăng nhập</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MAIN APP ═══════════════ -->
+<div id="mainScreen">
+  <nav class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-brand-icon">📦</div>
+      Kho Nhà
+    </div>
+    <div class="topbar-right">
+      <div class="avatar" id="topAvatar"></div>
+      <span class="topbar-name" id="topName"></span>
+      <button class="btn-logout" onclick="doLogout()">Đăng xuất</button>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="setup-banner" id="setupBanner">
+      <strong>⚠️ Chưa kết nối Firebase</strong>
+      Mở file <code>index.html</code>, tìm phần <code>firebaseConfig</code> và điền thông tin từ Firebase Console vào. Xem file <code>HUONG_DAN.md</code> để biết cách lấy thông tin này.
+    </div>
+
+    <div class="stats-row" id="statsRow">
+      <div class="stat"><div class="stat-label">Mặt hàng</div><div class="stat-val" id="s1">—</div></div>
+      <div class="stat"><div class="stat-label">Tổng số lượng</div><div class="stat-val" id="s2">—</div></div>
+      <div class="stat"><div class="stat-label">Hết hàng</div><div class="stat-val" id="s3">—</div></div>
+      <div class="stat"><div class="stat-label">Tổng giá trị</div><div class="stat-val small" id="s4">—</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <input class="search" id="searchInput" placeholder="🔍  Tìm kiếm..." oninput="renderItems()" />
+        <select class="filter" id="filterSel" onchange="renderItems()">
+          <option value="all">Tất cả</option>
+          <option value="available">Còn hàng</option>
+          <option value="low">Sắp hết (≤2)</option>
+          <option value="out">Hết hàng</option>
+        </select>
+      </div>
+      <button class="btn-add" onclick="openAdd()">+ Thêm mặt hàng</button>
+    </div>
+
+    <div class="grid" id="itemsGrid">
+      <div class="loading" style="grid-column:1/-1">Đang tải dữ liệu...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL THÊM ═══════════════ -->
+<div class="overlay" id="addOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Thêm mặt hàng mới</div>
+      <button class="btn-close" onclick="closeAdd()">×</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Hình ảnh</label>
+      <label class="upload-area" id="uploadLabel" for="imgFile">
+        📷 Nhấn để chọn ảnh (tùy chọn)
+        <input type="file" id="imgFile" accept="image/*" style="display:none" onchange="onImgSelect(this)" />
+      </label>
+      <img class="preview-img" id="previewImg" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tên mặt hàng *</label>
+      <input class="form-control" id="addName" placeholder="VD: Ghế gỗ cũ" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Kích thước</label>
+      <input class="form-control" id="addSize" placeholder="VD: 60 × 80 × 90 cm" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Danh mục</label>
+      <input class="form-control" id="addCat" placeholder="VD: Nội thất, Điện tử..." />
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="form-group">
+        <label class="form-label">Số lượng *</label>
+        <input class="form-control" type="number" id="addQty" placeholder="0" min="0" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Giá bán (₫)</label>
+        <input class="form-control" type="number" id="addPrice" placeholder="0" min="0" />
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeAdd()">Hủy</button>
+      <button class="btn-save" onclick="saveItem()">Lưu mặt hàng</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL CHI TIẾT ═══════════════ -->
+<div class="overlay" id="detailOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="detailName"></div>
+      <button class="btn-close" onclick="closeDetail()">×</button>
+    </div>
+    <div class="detail-img" id="detailImg"></div>
+    <table class="detail-table" id="detailTable"></table>
+    <div class="modal-footer">
+      <button class="btn-danger-outline" onclick="deleteItem()">Xóa</button>
+      <button class="btn-cancel" onclick="closeDetail()">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════ FIREBASE SDK ═══════════════ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // ═══════════════════════════════════════════════════
+  // 👇 DÁN THÔNG TIN FIREBASE CỦA BẠN VÀO ĐÂY
+  // ═══════════════════════════════════════════════════
+  const firebaseConfig = {
+    apiKey: "AIzaSyCRggbAVd9ROiGKIZdK9qjXFb1z5G1FYJc",
+    authDomain: "kho-nha123.firebaseapp.com",
+    projectId: "kho-nha123",
+    storageBucket: "kho-nha123.firebasestorage.app",
+    messagingSenderId: "364858586846",
+    appId: "1:364858586846:web:f2c43cd8d33f494c67f44f",
+    measurementId: "G-XE5CW3NGFK"
+  };
+  // ═══════════════════════════════════════════════════
+
+  const CONFIGURED = !firebaseConfig.apiKey.startsWith("PASTE");
+
+  // Tài khoản (mật khẩu lưu plain text — phù hợp cho dùng nội bộ gia đình)
+  const ACCOUNTS = [
+    { id: 'chua', name: 'Chủ nhà',     pass: '1234' },
+    { id: 'tv1',  name: 'Thành viên 1', pass: '1111' },
+    { id: 'tv2',  name: 'Thành viên 2', pass: '2222' },
+    { id: 'tv3',  name: 'Thành viên 3', pass: '3333' },
+    { id: 'tv4',  name: 'Thành viên 4', pass: '4444' },
+  ];
+
+  let db, itemsRef;
+  let items = [];
+  let selectedId = null;
+  let newImgData = null;
+  let unsubscribe = null;
+
+  // ─── INIT ─────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    const sel = document.getElementById('loginUser');
+    ACCOUNTS.forEach(a => {
+      const o = document.createElement('option');
+      o.value = a.id; o.textContent = a.name; sel.appendChild(o);
+    });
+
+    if (!CONFIGURED) {
+      document.getElementById('setupBanner').classList.add('show');
+    } else {
+      try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        itemsRef = collection(db, 'items');
+      } catch(e) {
+        console.error('Firebase init error:', e);
+      }
+    }
+
+    document.getElementById('loginPass').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+  });
+
+  // ─── AUTH ─────────────────────────────────────────
+  window.doLogin = function() {
+    const uid  = document.getElementById('loginUser').value;
+    const pass = document.getElementById('loginPass').value;
+    const err  = document.getElementById('loginErr');
+    const acc  = ACCOUNTS.find(a => a.id === uid);
+    if (!acc) { err.textContent = 'Vui lòng chọn tài khoản.'; return; }
+    if (acc.pass !== pass) { err.textContent = 'Mật khẩu không đúng.'; return; }
+    err.textContent = '';
+    document.getElementById('loginScreen').style.display = 'none';
+    const ms = document.getElementById('mainScreen');
+    ms.style.display = 'flex'; ms.style.flexDirection = 'column';
+    document.getElementById('topAvatar').textContent = acc.name[0];
+    document.getElementById('topName').textContent = acc.name;
+    document.getElementById('loginPass').value = '';
+    startListening();
+  };
+
+  window.doLogout = function() {
+    if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+    document.getElementById('mainScreen').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('loginUser').value = '';
+    items = [];
+  };
+
+  // ─── DATA ─────────────────────────────────────────
+  function startListening() {
+    if (!CONFIGURED || !db) {
+      // Chạy offline với localStorage nếu chưa cấu hình Firebase
+      const raw = localStorage.getItem('kho_items');
+      items = raw ? JSON.parse(raw) : [];
+      renderAll();
+      return;
+    }
+    document.getElementById('itemsGrid').innerHTML = '<div class="loading" style="grid-column:1/-1">Đang tải...</div>';
+    unsubscribe = onSnapshot(itemsRef, snap => {
+      items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      items.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      renderAll();
+    });
+  }
+
+  function saveLocal() { localStorage.setItem('kho_items', JSON.stringify(items)); }
+
+  // ─── RENDER ───────────────────────────────────────
+  function renderAll() { renderStats(); renderItems(); }
+
+  function renderStats() {
+    const total = items.length;
+    const qty   = items.reduce((s, i) => s + (i.qty || 0), 0);
+    const out   = items.filter(i => i.qty === 0).length;
+    const val   = items.reduce((s, i) => s + (i.price || 0) * (i.qty || 0), 0);
+    document.getElementById('s1').textContent = total;
+    document.getElementById('s2').textContent = qty;
+    document.getElementById('s3').textContent = out;
+    document.getElementById('s4').textContent = val ? val.toLocaleString('vi-VN') + ' ₫' : '0 ₫';
+  }
+
+  window.renderItems = function() {
+    const q  = (document.getElementById('searchInput').value || '').toLowerCase();
+    const f  = document.getElementById('filterSel').value;
+    const list = items.filter(i => {
+      const match = (i.name || '').toLowerCase().includes(q) || (i.cat || '').toLowerCase().includes(q);
+      if (!match) return false;
+      if (f === 'available') return (i.qty || 0) > 2;
+      if (f === 'low')       return (i.qty || 0) > 0 && (i.qty || 0) <= 2;
+      if (f === 'out')       return (i.qty || 0) === 0;
+      return true;
+    });
+
+    const grid = document.getElementById('itemsGrid');
+    if (!list.length) {
+      grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📭</div>Chưa có mặt hàng nào. Nhấn "+ Thêm mặt hàng" để bắt đầu.</div>`;
+      return;
+    }
+
+    grid.innerHTML = list.map(i => {
+      const qty = i.qty || 0;
+      const cls = qty === 0 ? 'badge-zero' : qty <= 2 ? 'badge-low' : 'badge-ok';
+      const lbl = qty === 0 ? 'Hết hàng' : qty <= 2 ? `Còn ${qty}` : `${qty} cái`;
+      const priceStr = i.price ? Number(i.price).toLocaleString('vi-VN') + ' ₫' : '—';
+      const imgHtml = i.img
+        ? `<img src="${i.img}" alt="${i.name}" />`
+        : `<span>📦</span>`;
+      return `<div class="item-card" onclick="openDetail('${i.id}')">
+        <div class="card-img">${imgHtml}</div>
+        <div class="card-body">
+          <div class="card-name" title="${i.name}">${i.name}</div>
+          <div class="card-size">${i.size || 'Chưa có kích thước'}</div>
+          <div class="card-footer">
+            <div class="card-price">${priceStr}</div>
+            <div class="badge ${cls}">${lbl}</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  };
+
+  // ─── ADD MODAL ────────────────────────────────────
+  window.openAdd = function() {
+    newImgData = null;
+    ['addName','addSize','addCat','addQty','addPrice'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('previewImg').style.display = 'none';
+    document.getElementById('uploadLabel').style.display = 'block';
+    document.getElementById('imgFile').value = '';
+    document.getElementById('addOverlay').classList.add('open');
+    setTimeout(() => document.getElementById('addName').focus(), 100);
+  };
+  window.closeAdd = function() { document.getElementById('addOverlay').classList.remove('open'); };
+
+  window.onImgSelect = function(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      newImgData = e.target.result;
+      const prev = document.getElementById('previewImg');
+      prev.src = newImgData; prev.style.display = 'block';
+      document.getElementById('uploadLabel').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.saveItem = async function() {
+    const name = document.getElementById('addName').value.trim();
+    if (!name) { showToast('Vui lòng nhập tên mặt hàng'); return; }
+    const item = {
+      name,
+      size:  document.getElementById('addSize').value.trim(),
+      cat:   document.getElementById('addCat').value.trim(),
+      qty:   parseInt(document.getElementById('addQty').value) || 0,
+      price: parseInt(document.getElementById('addPrice').value) || 0,
+      img:   newImgData || null,
+      createdAt: CONFIGURED ? serverTimestamp() : new Date().toISOString(),
+    };
+
+    if (CONFIGURED && db) {
+      await addDoc(itemsRef, item);
+    } else {
+      item.id = 'local_' + Date.now();
+      items.unshift(item);
+      saveLocal();
+      renderAll();
+    }
+    closeAdd();
+    showToast('Đã thêm mặt hàng ✓');
+  };
+
+  // ─── DETAIL MODAL ─────────────────────────────────
+  window.openDetail = function(id) {
+    selectedId = id;
+    const i = items.find(x => x.id === id);
+    if (!i) return;
+    document.getElementById('detailName').textContent = i.name;
+    const imgWrap = document.getElementById('detailImg');
+    imgWrap.innerHTML = i.img ? `<img src="${i.img}" alt="${i.name}" />` : '📦';
+    document.getElementById('detailTable').innerHTML = `
+      <tr><td class="dk">Kích thước</td><td class="dv">${i.size || '—'}</td></tr>
+      <tr><td class="dk">Danh mục</td><td class="dv">${i.cat || '—'}</td></tr>
+      <tr>
+        <td class="dk">Số lượng</td>
+        <td class="dv">
+          <div class="inline-edit">
+            <input class="inline-input" type="number" id="editQty" value="${i.qty || 0}" min="0" />
+            <button class="btn-inline" onclick="updateField('qty')">Lưu</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="dk">Giá bán</td>
+        <td class="dv">
+          <div class="inline-edit">
+            <input class="inline-input" type="number" id="editPrice" value="${i.price || 0}" min="0" style="width:110px" />
+            <button class="btn-inline" onclick="updateField('price')">Lưu</button>
+          </div>
+        </td>
+      </tr>
+    `;
+    document.getElementById('detailOverlay').classList.add('open');
+  };
+  window.closeDetail = function() { document.getElementById('detailOverlay').classList.remove('open'); };
+
+  window.updateField = async function(field) {
+    const i = items.find(x => x.id === selectedId);
+    if (!i) return;
+    const val = parseInt(document.getElementById(field === 'qty' ? 'editQty' : 'editPrice').value);
+    if (isNaN(val) || val < 0) { showToast('Giá trị không hợp lệ'); return; }
+
+    if (CONFIGURED && db) {
+      await updateDoc(doc(db, 'items', selectedId), { [field]: val });
+    } else {
+      i[field] = val; saveLocal(); renderAll();
+    }
+    closeDetail();
+    showToast('Đã cập nhật ✓');
+  };
+
+  window.deleteItem = async function() {
+    if (!confirm('Xóa mặt hàng này?')) return;
+    if (CONFIGURED && db) {
+      await deleteDoc(doc(db, 'items', selectedId));
+    } else {
+      items = items.filter(x => x.id !== selectedId);
+      saveLocal(); renderAll();
+    }
+    closeDetail();
+    showToast('Đã xóa ✓');
+  };
+
+  // ─── UTILS ────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // đóng modal khi click ra ngoài
+  ['addOverlay','detailOverlay'].forEach(id => {
+    document.getElementById(id).addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
