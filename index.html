@@ -325,7 +325,7 @@
       <label class="form-label">Hình ảnh</label>
       <label class="upload-area" id="uploadLabel" for="imgFile">
         📷 Nhấn để chọn ảnh (tùy chọn)
-        <input type="file" id="imgFile" accept="image/*" style="display:none" onchange="onImgSelect(this)" />
+        <input type="file" id="imgFile" accept="image/*" multiple style="display:none" onchange="onImgSelect(this)" />
       </label>
       <img class="preview-img" id="previewImg" />
     </div>
@@ -522,9 +522,8 @@
       const cls = qty === 0 ? 'badge-zero' : qty <= 2 ? 'badge-low' : 'badge-ok';
       const lbl = qty === 0 ? 'Hết hàng' : qty <= 2 ? `Còn ${qty}` : `${qty} cái`;
       const priceStr = i.price ? Number(i.price).toLocaleString('vi-VN') + ' ₫' : '—';
-      const imgHtml = i.img
-        ? `<img src="${i.img}" alt="${i.name}" />`
-        : `<span>📦</span>`;
+      const firstImg = Array.isArray(i.img) ? i.img[0] : i.img;
+      const imgHtml = firstImg ? `<img src="${firstImg}" alt="${i.name}" />` : `<span>📦</span>`;
       return `<div class="item-card" onclick="openDetail('${i.id}')">
         <div class="card-img">${imgHtml}</div>
         <div class="card-body">
@@ -541,9 +540,11 @@
 
   // ─── ADD MODAL ────────────────────────────────────
   window.openAdd = function() {
-    newImgData = null;
+    img: (Array.isArray(newImgData) ? newImgData.filter(Boolean) : null) || null,
     ['addName','addSize','addCat','addQty','addPrice'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('previewImg').style.display = 'none';
+    const pg = document.getElementById('previewGrid');
+    if (pg) pg.innerHTML = '';
     document.getElementById('uploadLabel').style.display = 'block';
     document.getElementById('imgFile').value = '';
     document.getElementById('addOverlay').classList.add('open');
@@ -552,17 +553,57 @@
   window.closeAdd = function() { document.getElementById('addOverlay').classList.remove('open'); };
 
   window.onImgSelect = function(input) {
-    const file = input.files[0];
-    if (!file) return;
+  const files = Array.from(input.files);
+  if (!files.length) return;
+
+  newImgData = [];
+  document.getElementById('previewImg').style.display = 'none';
+  document.getElementById('uploadLabel').style.display = 'none';
+
+  let previewGrid = document.getElementById('previewGrid');
+  if (!previewGrid) {
+    previewGrid = document.createElement('div');
+    previewGrid.id = 'previewGrid';
+    previewGrid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;';
+    document.getElementById('uploadLabel').parentNode.appendChild(previewGrid);
+  }
+  previewGrid.innerHTML = '';
+
+  files.forEach((file, idx) => {
     const reader = new FileReader();
     reader.onload = e => {
-      newImgData = e.target.result;
-      const prev = document.getElementById('previewImg');
-      prev.src = newImgData; prev.style.display = 'block';
-      document.getElementById('uploadLabel').style.display = 'none';
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 800;
+        let w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+          else       { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const data = canvas.toDataURL('image/jpeg', 0.82);
+        newImgData[idx] = data;
+
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;';
+        wrap.dataset.idx = idx;
+        wrap.innerHTML = `
+          <img src="${data}" style="width:100%;height:100%;object-fit:cover;" />
+          <button onclick="removePreview(${idx})" style="position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,0.55);color:#fff;border:none;cursor:pointer;font-size:13px;line-height:1;">×</button>
+        `;
+        previewGrid.appendChild(wrap);
+      };
+      img.src = e.target.result;
     };
     reader.readAsDataURL(file);
-  };
+  });
+};
+
+window.removePreview = function(idx) {
+  newImgData[idx] = null;
+  const grid = document.getElementById('previewGr
 
   window.saveItem = async function() {
     const name = document.getElementById('addName').value.trim();
@@ -596,7 +637,14 @@
     if (!i) return;
     document.getElementById('detailName').textContent = i.name;
     const imgWrap = document.getElementById('detailImg');
-    imgWrap.innerHTML = i.img ? `<img src="${i.img}" alt="${i.name}" />` : '📦';
+    iconst imgs = Array.isArray(i.img) ? i.img.filter(Boolean) : (i.img ? [i.img] : []);
+    if (imgs.length > 1) {
+    imgWrap.style.flexDirection = 'row'; imgWrap.style.overflowX = 'auto'; imgWrap.style.gap = '6px';
+    imgWrap.innerHTML = imgs.map(src => `<img src="${src}" style="height:100%;min-width:180px;object-fit:cover;border-radius:6px;" />`).join('');
+    } else {
+    imgWrap.style.flexDirection = ''; imgWrap.style.overflowX = '';
+    imgWrap.innerHTML = imgs[0] ? `<img src="${imgs[0]}" alt="${i.name}" />` : '📦';
+    }
     document.getElementById('detailTable').innerHTML = `
       <tr><td class="dk">Kích thước</td><td class="dv">${i.size || '—'}</td></tr>
       <tr><td class="dk">Danh mục</td><td class="dv">${i.cat || '—'}</td></tr>
