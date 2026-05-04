@@ -32,7 +32,7 @@
     .login-err { font-size: 12px; color: var(--danger); margin-top: 10px; text-align: center; min-height: 16px; }
 
     #mainScreen { display: none; flex-direction: column; min-height: 100vh; }
-    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; height: 56px; position: sticky; top: 0; z-index: 10; }
+    .topbar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 56px; position: sticky; top: 0; z-index: 10; }
     .topbar-brand { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
     .topbar-brand-icon { width: 28px; height: 28px; border-radius: 7px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; }
     .topbar-right { display: flex; align-items: center; gap: 12px; }
@@ -41,24 +41,24 @@
     .btn-logout { font-size: 12px; color: var(--text2); background: none; border: 1px solid var(--border2); border-radius: var(--radius); padding: 5px 12px; cursor: pointer; }
     .btn-logout:hover { background: var(--surface2); }
 
-    .main { padding: 1.5rem; max-width: 1100px; margin: 0 auto; flex: 1; }
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+    .main { padding: 1.5rem 2.5rem; max-width: 1600px; margin: 0 auto; flex: 1; width: 100%; }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
     .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
     .stat-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
     .stat-val { font-size: 24px; font-weight: 700; color: var(--text); }
     .stat-val.small { font-size: 16px; }
     .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1.25rem; }
     .toolbar-left { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .search { padding: 8px 12px; font-size: 13px; width: 220px; border: 1px solid var(--border2); border-radius: var(--radius); background: var(--surface); color: var(--text); outline: none; }
+    .search { padding: 8px 12px; font-size: 13px; width: 260px; border: 1px solid var(--border2); border-radius: var(--radius); background: var(--surface); color: var(--text); outline: none; }
     .search:focus { border-color: var(--accent); }
     .filter { padding: 8px 10px; font-size: 13px; border: 1px solid var(--border2); border-radius: var(--radius); background: var(--surface); color: var(--text); cursor: pointer; outline: none; }
-    .btn-add { padding: 8px 16px; font-size: 13px; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; }
+    .btn-add { padding: 8px 18px; font-size: 13px; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; }
     .btn-add:hover { opacity: 0.88; }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
     .item-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: box-shadow 0.15s, transform 0.1s; }
-    .item-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
-    .card-img { width: 100%; height: 140px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 40px; overflow: hidden; }
+    .item-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .card-img { width: 100%; height: 180px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 40px; overflow: hidden; }
     .card-img img { width: 100%; height: 100%; object-fit: cover; }
     .card-body { padding: 12px; }
     .card-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
@@ -75,13 +75,13 @@
 
     .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
     .overlay.open { display: flex; }
-    .modal { background: var(--surface); border-radius: var(--radius-lg); padding: 1.75rem; width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; }
+    .modal { background: var(--surface); border-radius: var(--radius-lg); padding: 1.75rem; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
     .modal-title { font-size: 16px; font-weight: 700; }
-    .btn-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text2); line-height: 1; }
+    .btn-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text2); line-height: 1; }
     .upload-area { width: 100%; padding: 2rem 1rem; border: 2px dashed var(--border2); border-radius: var(--radius); text-align: center; cursor: pointer; font-size: 13px; color: var(--text2); transition: background 0.15s; display: block; }
     .upload-area:hover { background: var(--surface2); }
-    .preview-img { width: 100%; height: 150px; object-fit: cover; border-radius: var(--radius); display: none; }
+    .preview-img { display: none; }
     .modal-footer { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.5rem; }
     .btn-cancel { padding: 9px 18px; font-size: 13px; background: none; border: 1px solid var(--border2); border-radius: var(--radius); cursor: pointer; color: var(--text2); }
     .btn-cancel:hover { background: var(--surface2); }
@@ -89,8 +89,21 @@
     .btn-save:hover { opacity: 0.88; }
     .btn-danger-outline { padding: 9px 18px; font-size: 13px; background: none; border: 1px solid var(--danger); border-radius: var(--radius); cursor: pointer; color: var(--danger); margin-right: auto; }
 
-    .detail-img { width: 100%; height: 200px; background: var(--surface2); border-radius: var(--radius); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 56px; margin-bottom: 1.25rem; }
-    .detail-img img { width: 100%; height: 100%; object-fit: cover; }
+    /* ảnh trong modal chi tiết — cuộn ngang được */
+    .detail-img {
+      width: 100%; height: 220px;
+      background: var(--surface2); border-radius: var(--radius);
+      display: flex; align-items: center; gap: 6px;
+      overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      font-size: 56px; margin-bottom: 1.25rem;
+    }
+    .detail-img img {
+      height: 100%; min-width: 200px; flex-shrink: 0;
+      object-fit: cover; border-radius: 6px;
+      scroll-snap-align: start;
+    }
+
     .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
     .detail-table td { padding: 9px 0; border-bottom: 1px solid var(--border); vertical-align: middle; }
     .detail-table tr:last-child td { border-bottom: none; }
@@ -104,11 +117,8 @@
     .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: #1a1a18; color: #fff; padding: 10px 20px; border-radius: 999px; font-size: 13px; font-weight: 500; z-index: 999; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
     .toast.show { opacity: 1; }
 
-    .setup-banner { background: #fff3cd; border: 1px solid #ffc107; border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 13px; color: #664d03; display: none; }
-    .setup-banner.show { display: block; }
-    .setup-banner strong { display: block; margin-bottom: 4px; }
-
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+      .main { padding: 1rem; }
       .topbar-name { display: none; }
       .search { width: 150px; }
       .stat-val { font-size: 20px; }
@@ -134,7 +144,7 @@
       <label class="form-label">Mật khẩu</label>
       <input type="password" class="form-control" id="loginPass" placeholder="Nhập mật khẩu" />
     </div>
-    <button class="btn-primary" onclick="doLogin()">Đăng nhập</button>
+    <button class="btn-primary" id="loginBtn" onclick="doLogin()">Đăng nhập</button>
     <div class="login-err" id="loginErr"></div>
   </div>
 </div>
@@ -151,12 +161,7 @@
       <button class="btn-logout" onclick="doLogout()">Đăng xuất</button>
     </div>
   </nav>
-
   <div class="main">
-    <div class="setup-banner" id="setupBanner">
-      <strong>⚠️ Chưa kết nối Firebase</strong>
-      Mở file <code>index.html</code>, tìm phần <code>firebaseConfig</code> và điền thông tin từ Firebase Console vào.
-    </div>
     <div class="stats-row">
       <div class="stat"><div class="stat-label">Mặt hàng</div><div class="stat-val" id="s1">—</div></div>
       <div class="stat"><div class="stat-label">Tổng số lượng</div><div class="stat-val" id="s2">—</div></div>
@@ -191,7 +196,7 @@
     <div class="form-group">
       <label class="form-label">Hình ảnh</label>
       <label class="upload-area" id="uploadLabel" for="imgFile">
-        📷 Nhấn để chọn ảnh (tùy chọn)
+        📷 Nhấn để chọn ảnh (tùy chọn, chọn được nhiều ảnh)
         <input type="file" id="imgFile" accept="image/*" multiple style="display:none" onchange="onImgSelect(this)" />
       </label>
       <img class="preview-img" id="previewImg" />
@@ -220,7 +225,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeAdd()">Hủy</button>
-      <button class="btn-save" onclick="saveItem()">Lưu mặt hàng</button>
+      <button class="btn-save" id="btnSave" onclick="saveItem()">Lưu mặt hàng</button>
     </div>
   </div>
 </div>
@@ -243,13 +248,14 @@
 
 <div class="toast" id="toast"></div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<!-- Firebase compat SDK (không cần type=module, chạy được mọi nơi) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
-  // ═══════════════════════════════════════════════════
-  // 👇 THÔNG TIN FIREBASE CỦA BẠN
-  // ═══════════════════════════════════════════════════
+<script>
+  // ════════════════════════════════════════
+  // FIREBASE CONFIG
+  // ════════════════════════════════════════
   const firebaseConfig = {
     apiKey: "AIzaSyCRggbAVd9ROiGKIZdK9qjXFb1z5G1FYJc",
     authDomain: "kho-nha123.firebaseapp.com",
@@ -258,9 +264,7 @@
     messagingSenderId: "364858586846",
     appId: "1:364858586846:web:f2c43cd8d33f494c67f44f"
   };
-  // ═══════════════════════════════════════════════════
-
-  const CONFIGURED = !firebaseConfig.apiKey.startsWith("PASTE");
+  // ════════════════════════════════════════
 
   const ACCOUNTS = [
     { id: 'chua', name: 'Chủ nhà',      pass: '1234' },
@@ -270,45 +274,37 @@
     { id: 'tv4',  name: 'Thành viên 4', pass: '4444' },
   ];
 
-  let db, itemsRef;
-  let items = [];
-  let selectedId = null;
-  let newImgData = null;
-  let unsubscribe = null;
-
-  // ─── INIT ────────────────────────────────────────
-  window.addEventListener('DOMContentLoaded', () => {
+  // Điền tài khoản vào dropdown ngay khi trang load — không cần đợi Firebase
+  (function initAccounts() {
     const sel = document.getElementById('loginUser');
     ACCOUNTS.forEach(a => {
       const o = document.createElement('option');
       o.value = a.id; o.textContent = a.name; sel.appendChild(o);
     });
+  })();
 
-    if (!CONFIGURED) {
-      document.getElementById('setupBanner').classList.add('show');
-    } else {
-      try {
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        itemsRef = collection(db, 'items');
-      } catch(e) {
-        console.error('Firebase init error:', e);
-      }
-    }
-
-    document.getElementById('loginPass').addEventListener('keydown', e => {
-      if (e.key === 'Enter') doLogin();
-    });
+  document.getElementById('loginPass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
   });
 
-  // ─── AUTH ────────────────────────────────────────
-  window.doLogin = function() {
+  // Khởi tạo Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const itemsRef = db.collection('items');
+
+  let items = [];
+  let selectedId = null;
+  let newImgData = null;
+  let unsubscribe = null;
+
+  // ─── AUTH ────────────────────────────────
+  function doLogin() {
     const uid  = document.getElementById('loginUser').value;
     const pass = document.getElementById('loginPass').value;
     const err  = document.getElementById('loginErr');
     const acc  = ACCOUNTS.find(a => a.id === uid);
-    if (!acc)             { err.textContent = 'Vui lòng chọn tài khoản.'; return; }
-    if (acc.pass !== pass){ err.textContent = 'Mật khẩu không đúng.'; return; }
+    if (!acc)              { err.textContent = 'Vui lòng chọn tài khoản.'; return; }
+    if (acc.pass !== pass) { err.textContent = 'Mật khẩu không đúng.'; return; }
     err.textContent = '';
     document.getElementById('loginScreen').style.display = 'none';
     const ms = document.getElementById('mainScreen');
@@ -317,49 +313,43 @@
     document.getElementById('topName').textContent = acc.name;
     document.getElementById('loginPass').value = '';
     startListening();
-  };
+  }
 
-  window.doLogout = function() {
+  function doLogout() {
     if (unsubscribe) { unsubscribe(); unsubscribe = null; }
     document.getElementById('mainScreen').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('loginUser').value = '';
     items = [];
-  };
+  }
 
-  // ─── DATA ────────────────────────────────────────
+  // ─── DATA ────────────────────────────────
   function startListening() {
-    if (!CONFIGURED || !db) {
-      const raw = localStorage.getItem('kho_items');
-      items = raw ? JSON.parse(raw) : [];
-      renderAll();
-      return;
-    }
     document.getElementById('itemsGrid').innerHTML = '<div class="loading" style="grid-column:1/-1">Đang tải...</div>';
-    unsubscribe = onSnapshot(itemsRef, snap => {
+    unsubscribe = itemsRef.orderBy('createdAt', 'desc').onSnapshot(snap => {
       items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      items.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
       renderAll();
+    }, err => {
+      console.error(err);
+      showToast('Lỗi kết nối Firebase');
     });
   }
 
-  function saveLocal() { localStorage.setItem('kho_items', JSON.stringify(items)); }
-
-  // ─── RENDER ──────────────────────────────────────
+  // ─── RENDER ──────────────────────────────
   function renderAll() { renderStats(); renderItems(); }
 
   function renderStats() {
     const total = items.length;
     const qty   = items.reduce((s, i) => s + (i.qty || 0), 0);
-    const out   = items.filter(i => i.qty === 0).length;
+    const out   = items.filter(i => (i.qty || 0) === 0).length;
     const val   = items.reduce((s, i) => s + (i.price || 0) * (i.qty || 0), 0);
     document.getElementById('s1').textContent = total;
     document.getElementById('s2').textContent = qty;
     document.getElementById('s3').textContent = out;
-    document.getElementById('s4').textContent = val ? val.toLocaleString('vi-VN') + ' ₫' : '0 ₫';
+    document.getElementById('s4').textContent = val.toLocaleString('vi-VN') + ' ₫';
   }
 
-  window.renderItems = function() {
+  function renderItems() {
     const q    = (document.getElementById('searchInput').value || '').toLowerCase();
     const f    = document.getElementById('filterSel').value;
     const list = items.filter(i => {
@@ -373,54 +363,49 @@
 
     const grid = document.getElementById('itemsGrid');
     if (!list.length) {
-      grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📭</div>Chưa có mặt hàng nào. Nhấn "+ Thêm mặt hàng" để bắt đầu.</div>`;
+      grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📭</div>Chưa có mặt hàng nào.</div>';
       return;
     }
     grid.innerHTML = list.map(i => {
       const qty = i.qty || 0;
       const cls = qty === 0 ? 'badge-zero' : qty <= 2 ? 'badge-low' : 'badge-ok';
-      const lbl = qty === 0 ? 'Hết hàng' : qty <= 2 ? `Còn ${qty}` : `${qty} cái`;
+      const lbl = qty === 0 ? 'Hết hàng' : qty <= 2 ? 'Còn ' + qty : qty + ' cái';
       const priceStr = i.price ? Number(i.price).toLocaleString('vi-VN') + ' ₫' : '—';
       const firstImg = Array.isArray(i.img) ? i.img[0] : i.img;
-      const imgHtml  = firstImg ? `<img src="${firstImg}" alt="${i.name}" />` : `<span>📦</span>`;
-      return `<div class="item-card" onclick="openDetail('${i.id}')">
-        <div class="card-img">${imgHtml}</div>
-        <div class="card-body">
-          <div class="card-name" title="${i.name}">${i.name}</div>
-          <div class="card-size">${i.size || 'Chưa có kích thước'}</div>
-          <div class="card-footer">
-            <div class="card-price">${priceStr}</div>
-            <div class="badge ${cls}">${lbl}</div>
-          </div>
-        </div>
-      </div>`;
+      const imgHtml  = firstImg ? '<img src="' + firstImg + '" alt="' + i.name + '" />' : '<span>📦</span>';
+      return '<div class="item-card" onclick="openDetail(\'' + i.id + '\')">'
+        + '<div class="card-img">' + imgHtml + '</div>'
+        + '<div class="card-body">'
+        + '<div class="card-name" title="' + i.name + '">' + i.name + '</div>'
+        + '<div class="card-size">' + (i.size || 'Chưa có kích thước') + '</div>'
+        + '<div class="card-footer">'
+        + '<div class="card-price">' + priceStr + '</div>'
+        + '<div class="badge ' + cls + '">' + lbl + '</div>'
+        + '</div></div></div>';
     }).join('');
-  };
+  }
 
-  // ─── ADD MODAL ───────────────────────────────────
-  window.openAdd = function() {
+  // ─── ADD MODAL ───────────────────────────
+  function openAdd() {
     newImgData = null;
-    ['addName','addSize','addCat','addQty','addPrice'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('previewImg').style.display = 'none';
+    ['addName','addSize','addCat','addQty','addPrice'].forEach(function(id) { document.getElementById(id).value = ''; });
     document.getElementById('uploadLabel').style.display = 'block';
     document.getElementById('imgFile').value = '';
-    const pg = document.getElementById('previewGrid');
+    var pg = document.getElementById('previewGrid');
     if (pg) pg.innerHTML = '';
     document.getElementById('addOverlay').classList.add('open');
-    setTimeout(() => document.getElementById('addName').focus(), 100);
-  };
+    setTimeout(function() { document.getElementById('addName').focus(); }, 100);
+  }
 
-  window.closeAdd = function() { document.getElementById('addOverlay').classList.remove('open'); };
+  function closeAdd() { document.getElementById('addOverlay').classList.remove('open'); }
 
-  window.onImgSelect = function(input) {
-    const files = Array.from(input.files);
+  function onImgSelect(input) {
+    var files = Array.from(input.files);
     if (!files.length) return;
-
     newImgData = [];
-    document.getElementById('previewImg').style.display = 'none';
     document.getElementById('uploadLabel').style.display = 'none';
 
-    let previewGrid = document.getElementById('previewGrid');
+    var previewGrid = document.getElementById('previewGrid');
     if (!previewGrid) {
       previewGrid = document.createElement('div');
       previewGrid.id = 'previewGrid';
@@ -429,155 +414,122 @@
     }
     previewGrid.innerHTML = '';
 
-    files.forEach((file, idx) => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const img = new Image();
-        img.onload = () => {
-          const MAX = 800;
-          let w = img.width, h = img.height;
+    files.forEach(function(file, idx) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+          var MAX = 800, w = img.width, h = img.height;
           if (w > MAX || h > MAX) {
             if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
             else       { w = Math.round(w * MAX / h); h = MAX; }
           }
-          const canvas = document.createElement('canvas');
+          var canvas = document.createElement('canvas');
           canvas.width = w; canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          const data = canvas.toDataURL('image/jpeg', 0.82);
+          var data = canvas.toDataURL('image/jpeg', 0.82);
           newImgData[idx] = data;
-
-          const wrap = document.createElement('div');
+          var wrap = document.createElement('div');
           wrap.style.cssText = 'position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;';
           wrap.dataset.idx = idx;
-          wrap.innerHTML = `
-            <img src="${data}" style="width:100%;height:100%;object-fit:cover;" />
-            <button onclick="removePreview(${idx})" style="position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,0.55);color:#fff;border:none;cursor:pointer;font-size:13px;line-height:1;">×</button>
-          `;
+          wrap.innerHTML = '<img src="' + data + '" style="width:100%;height:100%;object-fit:cover;" />'
+            + '<button onclick="removePreview(' + idx + ')" style="position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,0.55);color:#fff;border:none;cursor:pointer;font-size:13px;line-height:1;">×</button>';
           previewGrid.appendChild(wrap);
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     });
-  };
+  }
 
-  window.removePreview = function(idx) {
+  function removePreview(idx) {
     newImgData[idx] = null;
-    const grid = document.getElementById('previewGrid');
-    const wrap = grid.querySelector(`[data-idx="${idx}"]`);
+    var grid = document.getElementById('previewGrid');
+    var wrap = grid.querySelector('[data-idx="' + idx + '"]');
     if (wrap) wrap.remove();
     if (grid.children.length === 0) {
       newImgData = null;
       document.getElementById('uploadLabel').style.display = 'block';
     }
-  };
+  }
 
-  window.saveItem = async function() {
-    const name = document.getElementById('addName').value.trim();
+  function saveItem() {
+    var name = document.getElementById('addName').value.trim();
     if (!name) { showToast('Vui lòng nhập tên mặt hàng'); return; }
-    const item = {
-      name,
-      size:  document.getElementById('addSize').value.trim(),
-      cat:   document.getElementById('addCat').value.trim(),
+    var btn = document.getElementById('btnSave');
+    btn.disabled = true; btn.textContent = 'Đang lưu...';
+    var item = {
+      name: name,
+      size:  document.getElementById('addSize').value.trim() || null,
+      cat:   document.getElementById('addCat').value.trim()  || null,
       qty:   parseInt(document.getElementById('addQty').value)   || 0,
       price: parseInt(document.getElementById('addPrice').value) || 0,
       img:   Array.isArray(newImgData) ? newImgData.filter(Boolean) : null,
-      createdAt: CONFIGURED ? serverTimestamp() : new Date().toISOString(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
-
-    if (CONFIGURED && db) {
-      await addDoc(itemsRef, item);
-    } else {
-      item.id = 'local_' + Date.now();
-      items.unshift(item);
-      saveLocal();
-      renderAll();
-    }
-    closeAdd();
-    showToast('Đã thêm mặt hàng ✓');
-  };
-
-  // ─── DETAIL MODAL ────────────────────────────────
-  window.openDetail = function(id) {
-    selectedId = id;
-    const i = items.find(x => x.id === id);
-    if (!i) return;
-    document.getElementById('detailName').textContent = i.name;
-    const imgWrap = document.getElementById('detailImg');
-    const imgs = Array.isArray(i.img) ? i.img.filter(Boolean) : (i.img ? [i.img] : []);
-    if (imgs.length > 1) {
-      imgWrap.style.flexDirection = 'row';
-      imgWrap.style.overflowX    = 'auto';
-      imgWrap.style.gap          = '6px';
-      imgWrap.innerHTML = imgs.map(src =>
-        `<img src="${src}" style="height:100%;min-width:180px;object-fit:cover;border-radius:6px;" />`
-      ).join('');
-    } else {
-      imgWrap.style.flexDirection = '';
-      imgWrap.style.overflowX    = '';
-      imgWrap.innerHTML = imgs[0] ? `<img src="${imgs[0]}" alt="${i.name}" />` : '📦';
-    }
-    document.getElementById('detailTable').innerHTML = `
-      <tr><td class="dk">Kích thước</td><td class="dv">${i.size || '—'}</td></tr>
-      <tr><td class="dk">Danh mục</td><td class="dv">${i.cat || '—'}</td></tr>
-      <tr>
-        <td class="dk">Số lượng</td>
-        <td class="dv">
-          <div class="inline-edit">
-            <input class="inline-input" type="number" id="editQty" value="${i.qty || 0}" min="0" />
-            <button class="btn-inline" onclick="updateField('qty')">Lưu</button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="dk">Giá bán</td>
-        <td class="dv">
-          <div class="inline-edit">
-            <input class="inline-input" type="number" id="editPrice" value="${i.price || 0}" min="0" style="width:110px" />
-            <button class="btn-inline" onclick="updateField('price')">Lưu</button>
-          </div>
-        </td>
-      </tr>
-    `;
-    document.getElementById('detailOverlay').classList.add('open');
-  };
-
-  window.closeDetail = function() { document.getElementById('detailOverlay').classList.remove('open'); };
-
-  window.updateField = async function(field) {
-    const i   = items.find(x => x.id === selectedId);
-    if (!i) return;
-    const val = parseInt(document.getElementById(field === 'qty' ? 'editQty' : 'editPrice').value);
-    if (isNaN(val) || val < 0) { showToast('Giá trị không hợp lệ'); return; }
-    if (CONFIGURED && db) {
-      await updateDoc(doc(db, 'items', selectedId), { [field]: val });
-    } else {
-      i[field] = val; saveLocal(); renderAll();
-    }
-    closeDetail();
-    showToast('Đã cập nhật ✓');
-  };
-
-  window.deleteItem = async function() {
-    if (!confirm('Xóa mặt hàng này?')) return;
-    if (CONFIGURED && db) {
-      await deleteDoc(doc(db, 'items', selectedId));
-    } else {
-      items = items.filter(x => x.id !== selectedId);
-      saveLocal(); renderAll();
-    }
-    closeDetail();
-    showToast('Đã xóa ✓');
-  };
-
-  // ─── UTILS ───────────────────────────────────────
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2200);
+    itemsRef.add(item).then(function() {
+      closeAdd();
+      showToast('Đã thêm mặt hàng ✓');
+    }).catch(function(e) {
+      showToast('Lỗi: ' + e.message);
+    }).finally(function() {
+      btn.disabled = false; btn.textContent = 'Lưu mặt hàng';
+    });
   }
 
-  ['addOverlay','detailOverlay'].forEach(id => {
+  // ─── DETAIL MODAL ────────────────────────
+  function openDetail(id) {
+    selectedId = id;
+    var i = items.find(function(x) { return x.id === id; });
+    if (!i) return;
+    document.getElementById('detailName').textContent = i.name;
+    var imgWrap = document.getElementById('detailImg');
+    var imgs = Array.isArray(i.img) ? i.img.filter(Boolean) : (i.img ? [i.img] : []);
+    imgWrap.innerHTML = imgs.length
+      ? imgs.map(function(src) { return '<img src="' + src + '" alt="' + i.name + '" />'; }).join('')
+      : '📦';
+    document.getElementById('detailTable').innerHTML =
+      '<tr><td class="dk">Kích thước</td><td class="dv">' + (i.size || '—') + '</td></tr>'
+      + '<tr><td class="dk">Danh mục</td><td class="dv">' + (i.cat || '—') + '</td></tr>'
+      + '<tr><td class="dk">Số lượng</td><td class="dv"><div class="inline-edit">'
+      + '<input class="inline-input" type="number" id="editQty" value="' + (i.qty || 0) + '" min="0" />'
+      + '<button class="btn-inline" onclick="updateField(\'qty\')">Lưu</button></div></td></tr>'
+      + '<tr><td class="dk">Giá bán</td><td class="dv"><div class="inline-edit">'
+      + '<input class="inline-input" type="number" id="editPrice" value="' + (i.price || 0) + '" min="0" style="width:110px" />'
+      + '<button class="btn-inline" onclick="updateField(\'price\')">Lưu</button></div></td></tr>';
+    document.getElementById('detailOverlay').classList.add('open');
+  }
+
+  function closeDetail() { document.getElementById('detailOverlay').classList.remove('open'); }
+
+  function updateField(field) {
+    var inputId = field === 'qty' ? 'editQty' : 'editPrice';
+    var val = parseInt(document.getElementById(inputId).value);
+    if (isNaN(val) || val < 0) { showToast('Giá trị không hợp lệ'); return; }
+    var update = {};
+    update[field] = val;
+    itemsRef.doc(selectedId).update(update).then(function() {
+      closeDetail();
+      showToast('Đã cập nhật ✓');
+    }).catch(function(e) { showToast('Lỗi: ' + e.message); });
+  }
+
+  function deleteItem() {
+    if (!confirm('Xóa mặt hàng này?')) return;
+    itemsRef.doc(selectedId).delete().then(function() {
+      closeDetail();
+      showToast('Đã xóa ✓');
+    }).catch(function(e) { showToast('Lỗi: ' + e.message); });
+  }
+
+  // ─── UTILS ───────────────────────────────
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2400);
+  }
+
+  ['addOverlay','detailOverlay'].forEach(function(id) {
     document.getElementById(id).addEventListener('click', function(e) {
       if (e.target === this) this.classList.remove('open');
     });
